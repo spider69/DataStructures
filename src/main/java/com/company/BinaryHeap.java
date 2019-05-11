@@ -18,6 +18,10 @@ class BinaryHeap {
         heap.add(value);
     }
 
+    void insert(int value, int idx) {
+        heap.add(idx, value);
+    }
+
     void siftUp(int idx) {
         while (idx > 0) {
             int siftingValue = heap.get(idx);
@@ -26,6 +30,27 @@ class BinaryHeap {
             if (parentValue < siftingValue) {
                 swap(parentIdx, idx);
                 idx = parentIdx;
+                continue;
+            }
+            break;
+        }
+    }
+
+    void siftDown(int idx) {
+        while (idx < heap.size() && getLeftChildIdx(idx) < heap.size() && getRightChildIdx(idx) < heap.size()) {
+            int siftingValue = heap.get(idx);
+            int leftChildIdx = getLeftChildIdx(idx);
+            int leftChildValue = heap.get(leftChildIdx);
+            int rightChildIdx = getRightChildIdx(idx);
+            int rightChildValue = heap.get(rightChildIdx);
+            if (leftChildValue > siftingValue) {
+                swap(leftChildIdx, idx);
+                idx = leftChildIdx;
+                continue;
+            }
+            if (rightChildValue > siftingValue) {
+                swap(rightChildIdx, idx);
+                idx = rightChildIdx;
                 continue;
             }
             break;

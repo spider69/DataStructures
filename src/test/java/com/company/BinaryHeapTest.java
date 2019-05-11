@@ -15,4 +15,11 @@ class BinaryHeapTest {
         binaryHeap.siftUpLastElement();
         assertEquals(Arrays.asList(100, 42, 18, 14, 29, 18, 12, 11, 13, 7), binaryHeap.getHeap());
     }
+
+    @Test
+    void siftDown() {
+        binaryHeap.insert(1, 0);
+        binaryHeap.siftDown(0);
+        assertEquals(Arrays.asList(42, 18, 14, 29, 18, 12, 11, 13, 7, 1), binaryHeap.getHeap());
+    }
 }
