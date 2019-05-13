@@ -16,10 +16,15 @@ class BinaryHeap {
 
     void insert(int value) {
         heap.add(value);
+        siftUpLastElement();
     }
 
-    void insert(int value, int idx) {
-        heap.add(idx, value);
+    int extractMax() {
+        int max = heap.get(0);
+        swap(0, heap.size() - 1);
+        heap.remove(heap.size() - 1);
+        siftDown(0);
+        return max;
     }
 
     void siftUp(int idx) {
@@ -37,23 +42,24 @@ class BinaryHeap {
     }
 
     void siftDown(int idx) {
-        while (idx < heap.size() && getLeftChildIdx(idx) < heap.size() && getRightChildIdx(idx) < heap.size()) {
-            int siftingValue = heap.get(idx);
-            int leftChildIdx = getLeftChildIdx(idx);
+        int siftingValue = heap.get(idx);
+        int leftChildIdx = getLeftChildIdx(idx);
+        if (leftChildIdx < heap.size()) {
             int leftChildValue = heap.get(leftChildIdx);
-            int rightChildIdx = getRightChildIdx(idx);
-            int rightChildValue = heap.get(rightChildIdx);
-            if (leftChildValue > siftingValue) {
+            if (siftingValue < leftChildValue) {
                 swap(leftChildIdx, idx);
-                idx = leftChildIdx;
-                continue;
+                siftDown(leftChildIdx);
+                return;
             }
-            if (rightChildValue > siftingValue) {
+        }
+
+        int rightChildIdx = getRightChildIdx(idx);
+        if (rightChildIdx < heap.size()) {
+            int rightChildValue = heap.get(rightChildIdx);
+            if (siftingValue < rightChildValue) {
                 swap(rightChildIdx, idx);
-                idx = rightChildIdx;
-                continue;
+                siftDown(rightChildIdx);
             }
-            break;
         }
     }
 
